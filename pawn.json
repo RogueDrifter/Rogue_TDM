@@ -1,0 +1,13 @@
+{
+	"user": "RogueDrifter",
+	"repo": "Rogue_TDM",
+	"entry": "rTDM.pwn",
+	"output": "rTDM.amx",
+	"dependencies": [
+		"sampctl/samp-stdlib",
+		"Southclaws/zcmd"
+	],
+	"runtime": {
+		"mode": "y_testing"
+	}
+}
