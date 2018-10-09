@@ -30,4 +30,4 @@ I plan on adding more textdraws and progressing for levels and upgrading weapons
 
 ## Credits
 
-SovietComrade is credited for the map, rest of the script is basically done by me.
+SovietComrade is credited for the map, zeex for the command processor, rest of the script is basically done by me.
