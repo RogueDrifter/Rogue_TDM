@@ -27,3 +27,7 @@ It's a basic TDM with cool features and sound effects + an intro.
 ## Updates
 
 I plan on adding more textdraws and progressing for levels and upgrading weapons if i feel like its worth it.
+
+## Credits
+
+SovietComrade is credited for the map, rest of the script is basically done by me.
