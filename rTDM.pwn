@@ -391,7 +391,7 @@ public rTDM_PauseCheck(playerid)
 
 	new Float:rTX, Float:rTY, Float:rTZ;
 	GetPlayerPos(playerid, rTX, rTY, rTZ);
-	if(rTZ < 400.000)
+	if(rTZ < 300.000)
 	{
 		rTDM_SetPlayerPos(playerid, rTDM_Player[playerid][rTdmPTeam], rTDM_Player[playerid][rTdmPCount]);
 	}
