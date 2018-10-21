@@ -833,9 +833,6 @@ rTDM_EndEventForPlayer(playerid, rTDM_EndReason)
 	SetPlayerPos(playerid, rTDM_Player[playerid][rTdmPX], rTDM_Player[playerid][rTdmPY], rTDM_Player[playerid][rTdmPZ]);
 	rTDM_ResetSavedWeps(playerid);
 	rTDM_EndIntro(playerid);
-	new rTHour, rTMinute;
-	gettime(rTHour, rTMinute);
-	SetPlayerTime(playerid, rTHour, rTMinute);
 
 	KillTimer(rTDM_Player[playerid][rTdmPauseTimer]);
 	rTDM_Player[playerid][rTdmPauseTimer] = 0;
