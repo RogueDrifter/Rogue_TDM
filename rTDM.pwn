@@ -66,6 +66,9 @@ enum RTDM_PLAYER_INFO
 	rTdmPTicks,
 	rTdmWarnTicks,
 	rTdmPauseTimer,
+	rTdmITO, 
+	rTdmITW,
+	rTdmITT,
 
 	Float:rTdmHealth,
 	Float:rTdmArmour,
@@ -349,10 +352,9 @@ public rTDM_StartTimer()
 		GivePlayerMoney(i, -RTDM_EVENT_ENTRYCASH);
 		TogglePlayerControllable(i, 1);
 		SetPlayerVirtualWorld(i, RTDM_VW_ID);
-		StopAudioStreamForPlayer(i);
+		rTDM_EndIntro(i);
 		rTDM_Player[i][rTdmPauseTimer] = SetTimerEx("rTDM_PauseCheck", 1000, true, "i", i);
 		PlayAudioStreamForPlayer(i, "https://s0.vocaroo.com/media/download_temp/Vocaroo_s0NjOwClWUWz.mp3");
-		SetCameraBehindPlayer(i);
 	}
 
 	SendClientMessageToAll(RTDM_EVENT_COLOR, "Team_Deathmatch:[ The event has started! ]");
@@ -385,6 +387,15 @@ public rTDM_HideTD(playerid, TD_Number)
 forward rTDM_PauseCheck(playerid);
 public rTDM_PauseCheck(playerid)
 {
+	if(GetPlayerVirtualWorld(playerid) != RTDM_VW_ID) SetPlayerVirtualWorld(playerid, RTDM_VW_ID);
+
+	new Float:rTX, Float:rTY, Float:rTZ;
+	GetPlayerPos(playerid, rTX, rTY, rTZ);
+	if(rTZ < 400.000)
+	{
+		rTDM_SetPlayerPos(playerid, rTDM_Player[playerid][rTdmPTeam], rTDM_Player[playerid][rTdmPCount]);
+	}
+
 	if(!rTDM_Player[playerid][rTdmJustShot])
 	{
 		for(new i, j = GetPlayerPoolSize(); i <= j; i++)
@@ -535,10 +546,9 @@ CMD:jointdm(playerid)
 	StopAudioStreamForPlayer(playerid);
 	PlayAudioStreamForPlayer(playerid, "https://s0.vocaroo.com/media/download_temp/Vocaroo_s07h5ea7Pcjd.mp3");
 
-	SetTimerEx("rTDM_NextCam", 6000, false, "i", playerid);
-	SetTimerEx("rTDM_ThirdCam", 9500, false, "i", playerid);
-
-	SetTimerEx("rTDM_FinalCam", 19000, false, "i", playerid);
+	rTDM_Player[playerid][rTdmITO] = SetTimerEx("rTDM_NextCam", 6000, false, "i", playerid);
+	rTDM_Player[playerid][rTdmITW] = SetTimerEx("rTDM_ThirdCam", 9500, false, "i", playerid);
+	rTDM_Player[playerid][rTdmITT] = SetTimerEx("rTDM_FinalCam", 19000, false, "i", playerid);
 	return 1;
 }
 
@@ -724,6 +734,19 @@ rTDM_CreatePlayerTextdraws(playerid)
 	return 1;
 }
 
+rTDM_EndIntro(playerid)
+{
+	SetCameraBehindPlayer(playerid);
+	StopAudioStreamForPlayer(playerid);
+	KillTimer(rTDM_Player[playerid][rTdmITO]);
+	rTDM_Player[playerid][rTdmITO] = 0;
+	KillTimer(rTDM_Player[playerid][rTdmITW]);
+	rTDM_Player[playerid][rTdmITW] = 0;
+	KillTimer(rTDM_Player[playerid][rTdmITT]);
+	rTDM_Player[playerid][rTdmITT] = 0;
+	return 1;
+}
+
 rTDM_EndEvent()
 {
 	for(new i; i < RTDM_MAX_TD; i++)
@@ -809,6 +832,7 @@ rTDM_EndEventForPlayer(playerid, rTDM_EndReason)
 
 	SetPlayerPos(playerid, rTDM_Player[playerid][rTdmPX], rTDM_Player[playerid][rTdmPY], rTDM_Player[playerid][rTdmPZ]);
 	rTDM_ResetSavedWeps(playerid);
+	rTDM_EndIntro(playerid);
 
 	KillTimer(rTDM_Player[playerid][rTdmPauseTimer]);
 	rTDM_Player[playerid][rTdmPauseTimer] = 0;
