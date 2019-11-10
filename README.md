@@ -37,7 +37,7 @@ I plan on adding more textdraws and progressing for levels and upgrading weapons
 
 ## Credits
 
-SovietComrade is credited for the map, link: https://forum.sa-mp.com/showthread.php?t=658426  
+SovietComrade is credited for the map.
 Zeex for the command processor, rest of the script is basically done by me.
 
 ## Features
